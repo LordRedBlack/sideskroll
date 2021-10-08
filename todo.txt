@@ -1,0 +1,7 @@
+- Main menu 
+- Player Jump Animation
+- Status Bar
+
+
+
+Spielmechaniken?
