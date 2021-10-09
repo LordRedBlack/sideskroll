@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 public class Player : Entity
 {
     // == REFERENZEN
@@ -19,6 +18,7 @@ public class Player : Entity
     public GameState gs;
 
     public GameObject hookPrefab;
+    public Hook hook;
 
     // == ATTRIBUTE
 
@@ -49,6 +49,7 @@ public class Player : Entity
     public int availableWalljumps = 0;
 
     public int availableHooks = 1;
+    public bool isHooked = false;
 
     // possible states
     // - idle
@@ -94,9 +95,16 @@ public class Player : Entity
 
         // ~ Process Shooting
         if (Input.GetAxis("Fire1") == 1 &&
-            this.availableHooks > 0) 
+            this.availableHooks > 0 && 
+            this.isHooked == false) 
         {
             StartCoroutine(this.ShootHook());
+        }
+
+        if (Input.GetAxis("Fire1") == 1 &&
+            this.isHooked == true)
+        {
+            this.hook.Delete();
         }
 
 
@@ -157,6 +165,12 @@ public class Player : Entity
         this.UpdateAnimation();
     }
 
+    public void ReleaseHook()
+    {
+        this.availableHooks += 1;
+        this.isHooked = false;
+    }
+
     public IEnumerator ShootHook()
     {
         Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -168,12 +182,13 @@ public class Player : Entity
                                               mousePosition.y - this.transform.position.y);
         GameObject goHook = Instantiate(this.hookPrefab, this.transform.position, Quaternion.identity) as GameObject;
         Hook hook = goHook.GetComponent<Hook>();
-        hook.rb.AddForce(directionVector, ForceMode2D.Impulse);
-
+        this.hook = hook;
+        hook.player = this;
+        hook.rb.AddForce(directionVector * 0.4f, ForceMode2D.Impulse);
         this.availableHooks -= 1;
+        Physics2D.IgnoreCollision(hook.GetComponent<CircleCollider2D>(), this.GetComponent<BoxCollider2D>());
 
-        yield return new WaitForSeconds(1.5f);
-        this.availableHooks += 1;
+        yield return new WaitForSeconds(0.2f);
     }
 
     public IEnumerator Jump()
@@ -186,7 +201,7 @@ public class Player : Entity
 
         jumpPS.Play();
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         
         this.lockJump = false;
     }

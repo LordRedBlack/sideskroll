@@ -6,7 +6,7 @@ using System;
 public class Camera : MonoBehaviour
 {
     // == REFERENZEN
-    public Entity player;
+    public Entity subject;
 
     // == ATTRIBUTE
     public float lag = 2f;
@@ -33,19 +33,19 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (this.following)
+        if (this.isFollowing)
         {
-            Vector3 position = new Vector3(this.player.transform.position.x,
-                                           this.player.transform.position.y,
+            Vector3 position = new Vector3(this.subject.transform.position.x,
+                                           this.subject.transform.position.y,
                                            this.transform.position.z);
         
-            Vector3 distanceVector = new Vector3((this.xOffset + this.player.transform.position.x - this.transform.position.x),
-                                                (this.yOffset + this.player.transform.position.y - this.transform.position.y),
+            Vector3 distanceVector = new Vector3((this.xOffset + this.subject.transform.position.x - this.transform.position.x),
+                                                (this.yOffset + this.subject.transform.position.y - this.transform.position.y),
                                                 0);
             float distance = distanceVector.magnitude;
 
 
-            Vector3 translateVector = distanceVector * this.lag * (float)(this.softCutoffSlope * Math.Exp((1/this.softCutoffSlope) * (distance - this.softCutoffThreshold)) + 1);
+            Vector3 translateVector = distanceVector * this.lag;//* (float)(this.softCutoffSlope * Math.Exp((1/this.softCutoffSlope) * (distance - this.softCutoffThreshold)) + 1);
 
 
             if (distance > 0.5) 

@@ -8,6 +8,7 @@ TagManager:
   - Wallslide
   - Wall
   - Death
+  - Hook
   layers:
   - Default
   - TransparentFX

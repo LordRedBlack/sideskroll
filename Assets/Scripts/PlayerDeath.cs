@@ -11,8 +11,11 @@ public class PlayerDeath : MonoBehaviour
         if (collision.gameObject.CompareTag("Death"))
         {
             Debug.Log("Death");
+
+            GameState.instance.cam.Disable();
             GameState.instance.GameOver();
-            //Destroy(gameObject);
+            
+            Destroy(gameObject);
             //GameState.instance.Respawn();
         }
     }

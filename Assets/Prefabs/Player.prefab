@@ -9630,7 +9630,7 @@ GameObject:
   - component: {fileID: 4973206777431202709}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9767,13 +9767,20 @@ MonoBehaviour:
   sr: {fileID: 0}
   jumpPS: {fileID: 0}
   walkPS: {fileID: 0}
+  gs: {fileID: 0}
+  hookPrefab: {fileID: 0}
   speed: 5
+  lockVelocity: 0
   jumpForce: 6
   direction: 1
   inAir: 0
   isWallsliding: 0
   jumpAvailable: 0
   walljumpAvailable: 0
+  lockJump: 0
+  maxWalljumps: 2
+  availableWalljumps: 0
+  availableHooks: 1
   state: idle
 --- !u!95 &4973206777431202709
 Animator:
