@@ -633,6 +633,9 @@
     <Reference Include="Unity.Sysroot.Linux_x86_64">
         <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Sysroot.Linux_x86_64">
+      <HintPath>Library\ScriptAssemblies\Unity.Sysroot.Linux_x86_64.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline">
         <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
@@ -653,6 +656,9 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Toolchain.Linux-x86_64">
+      <HintPath>Library\ScriptAssemblies\Unity.Toolchain.Linux-x86_64.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
         <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
@@ -697,16 +703,10 @@
         <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
-        <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
+
     </Reference>
     <Reference Include="Unity.SysrootPackage.Editor">
         <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="PsdPlugin">
-        <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Psdimporter.Editor">
-        <HintPath>/home/jonas/Software/sideskroll/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

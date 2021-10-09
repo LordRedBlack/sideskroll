@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Wallslide
+  - Wall
+  - Death
   layers:
   - Default
   - TransparentFX
