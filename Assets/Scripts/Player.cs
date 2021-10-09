@@ -9,7 +9,10 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     public Animator anim;
     public SpriteRenderer sr;
-
+    public ParticleSystem jumpPS;
+    //!!!!
+    public ParticleSystem walkPS;
+    //!!!!
     // == ATTRIBUTE
 
     // Die Geschwindigkeit welche der Charakter on default hat
@@ -46,6 +49,12 @@ public class Player : MonoBehaviour
         this.rb = this.GetComponent<Rigidbody2D>();
         this.anim = this.GetComponent<Animator>();
         this.sr = this.GetComponent<SpriteRenderer>();
+
+        GameObject jumpPsGO = this.transform.GetChild(0).gameObject as GameObject;
+        this.jumpPS = jumpPsGO.GetComponent<ParticleSystem>();
+
+        GameObject walkPsGO = this.transform.GetChild(1).gameObject as GameObject;
+        this.walkPS = walkPsGO.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -69,6 +78,7 @@ public class Player : MonoBehaviour
             Vector2 jumpVector = new Vector2(0, this.jumpForce);
             this.rb.AddForce(jumpVector, ForceMode2D.Impulse);
             this.inAir = true;
+            jumpPS.Play();
         }
 
         if (Input.GetAxis("Jump") == 1 && this.isWallsliding && this.walljumpAvailable)
@@ -94,6 +104,7 @@ public class Player : MonoBehaviour
         else if (this.inAir == false && velocity != 0)
         {
             this.state = "walk";
+            walkPS.Play();
         }
 
         if (velocity > 0)
@@ -109,6 +120,10 @@ public class Player : MonoBehaviour
             this.direction *= -1;
         }
 
+        if (inAir != true && velocity != 0)
+        {
+            walkPS.Play();
+        }
 
         this.UpdateAnimation();
     }
