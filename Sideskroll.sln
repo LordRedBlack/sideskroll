@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Core.Runtime.csproj", "{788E456E-0258-2B2C-6B69-C04A1C2BDF10}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.UI", "UnityEngine.UI.csproj", "{6FB2D3E0-91B2-3A70-61CC-AD467DCFDB90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Core.Runtime.csproj", "{788E456E-0258-2B2C-6B69-C04A1C2BDF10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RenderPipelines.HighDefinition.Runtime", "Unity.RenderPipelines.HighDefinition.Runtime.csproj", "{AA94F4FA-C34A-301E-8B52-D33769147A46}"
 EndProject
@@ -39,14 +39,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6FB2D3E0-91B2-3A70-61CC-AD467DCFDB90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6FB2D3E0-91B2-3A70-61CC-AD467DCFDB90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FB2D3E0-91B2-3A70-61CC-AD467DCFDB90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FB2D3E0-91B2-3A70-61CC-AD467DCFDB90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788E456E-0258-2B2C-6B69-C04A1C2BDF10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA94F4FA-C34A-301E-8B52-D33769147A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA94F4FA-C34A-301E-8B52-D33769147A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA94F4FA-C34A-301E-8B52-D33769147A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
