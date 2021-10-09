@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+
+
+public class Player : Entity
 {
     // == REFERENZEN
 
+    // -- internal
     public Rigidbody2D rb;
     public Animator anim;
     public SpriteRenderer sr;
     public ParticleSystem jumpPS;
-    //!!!!
     public ParticleSystem walkPS;
-    //!!!!
+
+    // -- external 
+    public GameState gs;
+
+    public GameObject hookPrefab;
+
     // == ATTRIBUTE
 
     // Die Geschwindigkeit welche der Charakter on default hat
@@ -37,9 +44,11 @@ public class Player : MonoBehaviour
     public bool jumpAvailable = false;
     public bool walljumpAvailable = false;
     
-    public bool lockWalljump = false;
+    public bool lockJump = false;
     public int maxWalljumps = 2;
     public int availableWalljumps = 0;
+
+    public int availableHooks = 1;
 
     // possible states
     // - idle
@@ -60,6 +69,9 @@ public class Player : MonoBehaviour
 
         GameObject walkPsGO = this.transform.GetChild(1).gameObject as GameObject;
         this.walkPS = walkPsGO.GetComponent<ParticleSystem>();
+
+        GameObject goGameState = GameObject.Find("GameState") as GameObject;
+        this.gs = goGameState.GetComponent<GameState>();
     }
 
     // Update is called once per frame
@@ -80,22 +92,29 @@ public class Player : MonoBehaviour
             this.rb.velocity = velocityVector;
         }
 
-
-        if (Input.GetAxis("Jump") == 1 && this.inAir == false)
+        // ~ Process Shooting
+        if (Input.GetAxis("Fire1") == 1 &&
+            this.availableHooks > 0) 
         {
-            Vector2 jumpVector = new Vector2(0, this.jumpForce);
-            this.rb.AddForce(jumpVector, ForceMode2D.Impulse);
-            this.inAir = true;
-            jumpPS.Play();
+            StartCoroutine(this.ShootHook());
+        }
+
+
+        // ~ Process Jump
+        if (Input.GetAxis("Jump") == 1 && 
+            this.inAir == false &&
+            this.lockJump == false)
+        {
+            StartCoroutine(this.Jump());
         }
 
         // ~ Process Walljump
         if (Input.GetAxis("Jump") == 1 && 
             this.isWallsliding && 
             this.availableWalljumps > 0 &&
-            this.lockWalljump == false)
+            this.lockJump == false)
         {
-            this.StartCoroutine(this.Walljump());
+            StartCoroutine(this.Walljump());
         }
 
 
@@ -138,6 +157,41 @@ public class Player : MonoBehaviour
         this.UpdateAnimation();
     }
 
+    public IEnumerator ShootHook()
+    {
+        Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0;
+        Vector2 mouseVector = new Vector2(mousePosition.x, mousePosition.y);
+        //Instantiate(this.hookPrefab, mousePosition, Quaternion.identity);
+
+        Vector2 directionVector = new Vector2(mousePosition.x - this.transform.position.x,
+                                              mousePosition.y - this.transform.position.y);
+        GameObject goHook = Instantiate(this.hookPrefab, this.transform.position, Quaternion.identity) as GameObject;
+        Hook hook = goHook.GetComponent<Hook>();
+        hook.rb.AddForce(directionVector, ForceMode2D.Impulse);
+
+        this.availableHooks -= 1;
+
+        yield return new WaitForSeconds(1.5f);
+        this.availableHooks += 1;
+    }
+
+    public IEnumerator Jump()
+    {
+        Vector2 jumpVector = new Vector2(0, this.jumpForce);
+
+        this.rb.AddForce(jumpVector, ForceMode2D.Impulse);
+        this.inAir = true;
+        this.lockJump = true;
+
+        jumpPS.Play();
+
+        yield return new WaitForSeconds(0.1f);
+        
+        this.lockJump = false;
+    }
+
+
     public IEnumerator Walljump()
     {
         // Diese Flag verhindert dass rechts und links Steuerungseingaben die velocity überschreiben
@@ -150,13 +204,14 @@ public class Player : MonoBehaviour
         // Damit wird einer der verfügbaren Walljumps verbraucht. Ausßerdem müssen wir locken damit nicht mehrer jumps auf einmal verbraucht 
         // werden.
         this.availableWalljumps -= 1;
-        this.lockWalljump = true;
+        this.lockJump = true;
         // Jump Partikel effekt
         this.jumpPS.Play();
 
         // Für eine bestimmte Zeit wird die Eingabe blockiert, damit die x Geschwindigkeit des Jumps nicht 
         // überschrieben wird. Danach sind die Controls wieder voll freigegeben.
         yield return new WaitForSeconds(0.3f);
+        this.lockJump = false;
         this.lockVelocity = false;
     }
 
@@ -210,7 +265,7 @@ public class Player : MonoBehaviour
         // jump Vektoren auf einmal aktiviert werden und alle jumps in einem "super jump" verbraucht werden.
         if (collision.gameObject.tag == "Wallslide")
         {
-            this.lockWalljump = false;
+            //this.lockWalljump = false;
         }
     }
 
