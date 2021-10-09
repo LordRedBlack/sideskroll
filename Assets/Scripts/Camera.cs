@@ -6,7 +6,7 @@ using System;
 public class Camera : MonoBehaviour
 {
     // == REFERENZEN
-    public Player player;
+    public Entity player;
 
     // == ATTRIBUTE
     public float lag = 2f;
@@ -16,10 +16,12 @@ public class Camera : MonoBehaviour
     public float softCutoffSlope = 3;
     public float softCutoffThreshold = 4;
 
+    public bool isFollowing = true;
+
 
     private void Awake()
     {
-        this.player = GameObject.Find("Player").GetComponent<Player>();
+        this.subject = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Start is called before the first frame update
@@ -31,22 +33,40 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 position = new Vector3(this.player.transform.position.x,
-                                       this.player.transform.position.y,
-                                       this.transform.position.z);
-        
-        Vector3 distanceVector = new Vector3((this.xOffset + this.player.transform.position.x - this.transform.position.x),
-                                             (this.yOffset + this.player.transform.position.y - this.transform.position.y),
-                                             0);
-        float distance = distanceVector.magnitude;
-
-
-        Vector3 translateVector = distanceVector * this.lag * (float)(this.softCutoffSlope * Math.Exp((1/this.softCutoffSlope) * (distance - this.softCutoffThreshold)) + 1);
-
-
-        if (distance > 0.5) 
+        if (this.following)
         {
-            this.transform.Translate(translateVector * Time.deltaTime);
+            Vector3 position = new Vector3(this.player.transform.position.x,
+                                           this.player.transform.position.y,
+                                           this.transform.position.z);
+        
+            Vector3 distanceVector = new Vector3((this.xOffset + this.player.transform.position.x - this.transform.position.x),
+                                                (this.yOffset + this.player.transform.position.y - this.transform.position.y),
+                                                0);
+            float distance = distanceVector.magnitude;
+
+
+            Vector3 translateVector = distanceVector * this.lag * (float)(this.softCutoffSlope * Math.Exp((1/this.softCutoffSlope) * (distance - this.softCutoffThreshold)) + 1);
+
+
+            if (distance > 0.5) 
+            {
+                this.transform.Translate(translateVector * Time.deltaTime);
+            }
         }
+    }
+
+    public void Enable()
+    {
+        this.isFollowing = true;
+    }
+
+    public void Disable()
+    {
+        this.isFollowing = false;
+    }
+
+    public void SetSubject(Entity subject)
+    {
+        this.subject = subject;
     }
 }

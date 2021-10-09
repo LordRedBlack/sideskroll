@@ -7,7 +7,6 @@ public class GameState : MonoBehaviour
     // == REFERENCES
 
     public GameObject goPlayer;
-
     public Player player;
 
     // Start is called before the first frame update
