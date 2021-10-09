@@ -8,7 +8,6 @@ public class GameState : MonoBehaviour
     // == REFERENCES
     public GameOverScreen GameOverScreen;
     public GameObject goPlayer;
-
     public Player player;
 
     public Transform respawnPoint;
