@@ -167,8 +167,11 @@ public class Player : Entity
 
     public void ReleaseHook()
     {
+        this.lockVelocity = false;
+        this.rb.bodyType = RigidbodyType2D.Dynamic;
         this.availableHooks += 1;
         this.isHooked = false;
+        Debug.Log("Release Hook");
     }
 
     public IEnumerator ShootHook()
@@ -183,12 +186,12 @@ public class Player : Entity
         GameObject goHook = Instantiate(this.hookPrefab, this.transform.position, Quaternion.identity) as GameObject;
         Hook hook = goHook.GetComponent<Hook>();
         this.hook = hook;
-        hook.player = this;
         hook.rb.AddForce(directionVector * 0.4f, ForceMode2D.Impulse);
         this.availableHooks -= 1;
         Physics2D.IgnoreCollision(hook.GetComponent<CircleCollider2D>(), this.GetComponent<BoxCollider2D>());
+        hook.player = this;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
     }
 
     public IEnumerator Jump()

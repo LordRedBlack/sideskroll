@@ -17,6 +17,10 @@ public class Hook : MonoBehaviour
     public float time = 0;
     public bool isHooked = false;
 
+    public float hookForce = 1.3f;
+
+    public float minDistance = 1f;
+
     void Awake()
     {
         this.rb = this.GetComponent<Rigidbody2D>();
@@ -38,17 +42,26 @@ public class Hook : MonoBehaviour
                                              this.transform.position.y - this.player.transform.position.y);
         Vector2 forceVector = distanceVector / distanceVector.magnitude;
 
-        if (this.isHooked == true)
-        {
-            this.player.lockVelocity = true;
-            this.player.rb.AddForce(forceVector * 1, ForceMode2D.Force);
-        }
-        
+        // - Hook delete conditions
+
+        // Der Hook existiert nur eine bestimmte Zeit
         this.time += Time.deltaTime;
-        
+
         if (this.time > this.maxTime)
         {
             this.Delete();
+        }
+
+        // Der Hook kann nur so kurz werden
+        if (this.isHooked && distanceVector.magnitude < this.minDistance)
+        {
+            this.Delete();
+        }
+
+        if (this.isHooked == true)
+        {
+            this.player.lockVelocity = true;
+            this.player.rb.AddForce(forceVector * this.hookForce, ForceMode2D.Force);
         }
 
         this.lr.SetPosition(0, this.transform.position);
@@ -72,8 +85,8 @@ public class Hook : MonoBehaviour
 
     public void Attach()
     {
-        this.rb.bodyType = RigidbodyType2D.Static;
         this.rb.velocity = new Vector2(0, 0);
+        this.rb.bodyType = RigidbodyType2D.Static;
 
         this.isHooked = true;
         this.player.isHooked = true;
@@ -81,7 +94,6 @@ public class Hook : MonoBehaviour
 
     public void Delete()
     {
-        this.player.lockVelocity = false;
         this.player.ReleaseHook();
         Destroy(this.gameObject);
     }
