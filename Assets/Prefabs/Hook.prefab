@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.7260461, a: 1}
+  m_Color: {r: 1, g: 0.24860118, b: 0.19215685, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,10 +123,18 @@ MonoBehaviour:
   rb: {fileID: 0}
   player: {fileID: 0}
   lr: {fileID: 0}
-  maxDistance: 10
-  maxTime: 2
+  maxTime: 5
   time: 0
-  isHooked: 0
+  springConstant: 15
+  baseLength: 3
+  length: 0
+  maxForce: 300
+  hookLayer:
+    serializedVersion: 2
+    m_Bits: 264
+  attached: 0
+  shade: 0
+  hookRadius: 0.2
 --- !u!58 &4880434752678810045
 CircleCollider2D:
   m_ObjectHideFlags: 0
